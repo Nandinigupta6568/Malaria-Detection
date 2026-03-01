@@ -1,0 +1,180 @@
+[
+    {
+        "label": "load_model",
+        "importPath": "tensorflow.keras.models",
+        "description": "tensorflow.keras.models",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.models",
+        "documentation": {}
+    },
+    {
+        "label": "Sequential",
+        "importPath": "tensorflow.keras.models",
+        "description": "tensorflow.keras.models",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.models",
+        "documentation": {}
+    },
+    {
+        "label": "cv2",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "cv2",
+        "description": "cv2",
+        "detail": "cv2",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "Conv2D",
+        "importPath": "tensorflow.keras.layers",
+        "description": "tensorflow.keras.layers",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.layers",
+        "documentation": {}
+    },
+    {
+        "label": "MaxPooling2D",
+        "importPath": "tensorflow.keras.layers",
+        "description": "tensorflow.keras.layers",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.layers",
+        "documentation": {}
+    },
+    {
+        "label": "Flatten",
+        "importPath": "tensorflow.keras.layers",
+        "description": "tensorflow.keras.layers",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.layers",
+        "documentation": {}
+    },
+    {
+        "label": "Dense",
+        "importPath": "tensorflow.keras.layers",
+        "description": "tensorflow.keras.layers",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.layers",
+        "documentation": {}
+    },
+    {
+        "label": "Dropout",
+        "importPath": "tensorflow.keras.layers",
+        "description": "tensorflow.keras.layers",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.layers",
+        "documentation": {}
+    },
+    {
+        "label": "load_data",
+        "importPath": "data_preprocessing",
+        "description": "data_preprocessing",
+        "isExtraImport": true,
+        "detail": "data_preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "create_model",
+        "importPath": "model",
+        "description": "model",
+        "isExtraImport": true,
+        "detail": "model",
+        "documentation": {}
+    },
+    {
+        "label": "ImageDataGenerator",
+        "importPath": "tensorflow.keras.preprocessing.image",
+        "description": "tensorflow.keras.preprocessing.image",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.preprocessing.image",
+        "documentation": {}
+    },
+    {
+        "label": "train_test_split",
+        "importPath": "sklearn.model_selection",
+        "description": "sklearn.model_selection",
+        "isExtraImport": true,
+        "detail": "sklearn.model_selection",
+        "documentation": {}
+    },
+    {
+        "label": "predict_image",
+        "kind": 2,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "def predict_image(image_path):\n    img = cv2.imread(image_path)\n    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n    img = img / 255.0\n    img = np.expand_dims(img, axis=0)\n    pred = model.predict(img)\n    if pred[0][0] > 0.5:\n        return \"Parasitized\"\n    else:\n        return \"Uninfected\"",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "model = load_model(\"malaria_model.h5\")\nIMG_SIZE = 64\ndef predict_image(image_path):\n    img = cv2.imread(image_path)\n    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n    img = img / 255.0\n    img = np.expand_dims(img, axis=0)\n    pred = model.predict(img)\n    if pred[0][0] > 0.5:\n        return \"Parasitized\"",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "IMG_SIZE",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "IMG_SIZE = 64\ndef predict_image(image_path):\n    img = cv2.imread(image_path)\n    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n    img = img / 255.0\n    img = np.expand_dims(img, axis=0)\n    pred = model.predict(img)\n    if pred[0][0] > 0.5:\n        return \"Parasitized\"\n    else:",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "load_data",
+        "kind": 2,
+        "importPath": "data_preprocessing",
+        "description": "data_preprocessing",
+        "peekOfCode": "def load_data(dataset_path=\"cell_images/\"):\n    images, labels = [], []\n    for label in [\"Parasitized\", \"Uninfected\"]:\n        folder = os.path.join(dataset_path, label)\n        for file in os.listdir(folder):\n            img = cv2.imread(os.path.join(folder, file))\n            img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n            images.append(img)\n            labels.append(1 if label==\"Parasitized\" else 0)\n    X = np.array(images)/255.0",
+        "detail": "data_preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "IMG_SIZE",
+        "kind": 5,
+        "importPath": "data_preprocessing",
+        "description": "data_preprocessing",
+        "peekOfCode": "IMG_SIZE = 64\ndef load_data(dataset_path=\"cell_images/\"):\n    images, labels = [], []\n    for label in [\"Parasitized\", \"Uninfected\"]:\n        folder = os.path.join(dataset_path, label)\n        for file in os.listdir(folder):\n            img = cv2.imread(os.path.join(folder, file))\n            img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n            images.append(img)\n            labels.append(1 if label==\"Parasitized\" else 0)",
+        "detail": "data_preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "create_model",
+        "kind": 2,
+        "importPath": "model",
+        "description": "model",
+        "peekOfCode": "def create_model(input_shape=(64,64,3)):\n    model = Sequential([\n        Conv2D(32, (3,3), activation='relu', input_shape=input_shape),\n        MaxPooling2D(2,2),\n        Conv2D(64, (3,3), activation='relu'),\n        MaxPooling2D(2,2),\n        Flatten(),\n        Dense(128, activation='relu'),\n        Dropout(0.5),\n        Dense(1, activation='sigmoid')",
+        "detail": "model",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "train",
+        "description": "train",
+        "peekOfCode": "def main():\n    print(\"🏁 main() started\")  # debug\n    # Load dataset\n    X, y = load_data()\n    print(\"Data loaded:\", X.shape, y.shape)\n    # Split dataset\n    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)\n    print(\"Data split done:\", X_train.shape, X_val.shape)\n    # Data augmentation\n    train_datagen = ImageDataGenerator(",
+        "detail": "train",
+        "documentation": {}
+    }
+]
