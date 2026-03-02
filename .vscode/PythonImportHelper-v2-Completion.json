@@ -16,6 +16,14 @@
         "documentation": {}
     },
     {
+        "label": "load_model",
+        "importPath": "tensorflow.keras.models",
+        "description": "tensorflow.keras.models",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.models",
+        "documentation": {}
+    },
+    {
         "label": "cv2",
         "kind": 6,
         "isExtraImport": true,
@@ -119,7 +127,7 @@
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def predict_image(image_path):\n    img = cv2.imread(image_path)\n    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n    img = img / 255.0\n    img = np.expand_dims(img, axis=0)\n    pred = model.predict(img)\n    if pred[0][0] > 0.5:\n        return \"Parasitized\"\n    else:\n        return \"Uninfected\"",
+        "peekOfCode": "def predict_image(image_path):\n    img = cv2.imread(image_path)\n    if img is None:\n        print(\"Image not found. Check the path.\")\n        return\n    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n    img = img / 255.0\n    img = np.expand_dims(img, axis=0)\n    prediction = model.predict(img)\n    if prediction[0][0] > 0.5:",
         "detail": "app",
         "documentation": {}
     },
@@ -128,7 +136,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "model = load_model(\"malaria_model.h5\")\nIMG_SIZE = 64\ndef predict_image(image_path):\n    img = cv2.imread(image_path)\n    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n    img = img / 255.0\n    img = np.expand_dims(img, axis=0)\n    pred = model.predict(img)\n    if pred[0][0] > 0.5:\n        return \"Parasitized\"",
+        "peekOfCode": "model = load_model(\"malaria_model.h5\")\nIMG_SIZE = 64\ndef predict_image(image_path):\n    img = cv2.imread(image_path)\n    if img is None:\n        print(\"Image not found. Check the path.\")\n        return\n    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n    img = img / 255.0\n    img = np.expand_dims(img, axis=0)",
         "detail": "app",
         "documentation": {}
     },
@@ -137,7 +145,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "IMG_SIZE = 64\ndef predict_image(image_path):\n    img = cv2.imread(image_path)\n    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n    img = img / 255.0\n    img = np.expand_dims(img, axis=0)\n    pred = model.predict(img)\n    if pred[0][0] > 0.5:\n        return \"Parasitized\"\n    else:",
+        "peekOfCode": "IMG_SIZE = 64\ndef predict_image(image_path):\n    img = cv2.imread(image_path)\n    if img is None:\n        print(\"Image not found. Check the path.\")\n        return\n    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n    img = img / 255.0\n    img = np.expand_dims(img, axis=0)\n    prediction = model.predict(img)",
         "detail": "app",
         "documentation": {}
     },
@@ -166,6 +174,15 @@
         "description": "model",
         "peekOfCode": "def create_model(input_shape=(64,64,3)):\n    model = Sequential([\n        Conv2D(32, (3,3), activation='relu', input_shape=input_shape),\n        MaxPooling2D(2,2),\n        Conv2D(64, (3,3), activation='relu'),\n        MaxPooling2D(2,2),\n        Flatten(),\n        Dense(128, activation='relu'),\n        Dropout(0.5),\n        Dense(1, activation='sigmoid')",
         "detail": "model",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "test_model",
+        "description": "test_model",
+        "peekOfCode": "model = load_model(\"malaria_model.h5\")\nprint(\"Model loaded successfully!\")",
+        "detail": "test_model",
         "documentation": {}
     },
     {
