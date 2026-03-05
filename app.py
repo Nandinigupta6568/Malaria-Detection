@@ -1,28 +1,36 @@
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 from tensorflow.keras.models import load_model
 import cv2
 import numpy as np
 
+app = Flask(__name__)
+CORS(app)
+
 model = load_model("malaria_model.h5")
 IMG_SIZE = 64
 
-def predict_image(image_path):
-    img = cv2.imread(image_path)
-    
+@app.route("/predict", methods=["POST"])
+def predict():
+    if "file" not in request.files:
+        return jsonify({"error": "No file uploaded"}), 400
+
+    file = request.files["file"]
+    file_bytes = np.frombuffer(file.read(), np.uint8)
+    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)
+
     if img is None:
-        print("Image not found. Check the path.")
-        return
-    
+        return jsonify({"error": "Invalid image"}), 400
+
     img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))
     img = img / 255.0
     img = np.expand_dims(img, axis=0)
 
     prediction = model.predict(img)
+    label = "Parasitized" if prediction[0][0] > 0.5 else "Uninfected"
+    confidence = float(prediction[0][0])
 
-    if prediction[0][0] > 0.5:
-        print("Prediction: Parasitized")
-    else:
-        print("Prediction: Uninfected")
+    return jsonify({"prediction": label, "confidence": confidence})
 
 if __name__ == "__main__":
-    path = input("Enter full image path: ")
-    predict_image(path)
+    app.run(host="0.0.0.0", port=5000)

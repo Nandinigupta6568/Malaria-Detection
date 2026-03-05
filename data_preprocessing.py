@@ -9,10 +9,17 @@ def load_data(dataset_path="cell_images/"):
     for label in ["Parasitized", "Uninfected"]:
         folder = os.path.join(dataset_path, label)
         for file in os.listdir(folder):
-            img = cv2.imread(os.path.join(folder, file))
+            file_path = os.path.join(folder, file)
+            img = cv2.imread(file_path)
+            
+            if img is None:
+                print("Warning: Could not read", file_path)
+                continue  # skip this file
+            
             img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))
             images.append(img)
             labels.append(1 if label=="Parasitized" else 0)
+            
     X = np.array(images)/255.0
     y = np.array(labels)
     return X, y

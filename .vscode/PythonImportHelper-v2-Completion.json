@@ -1,5 +1,37 @@
 [
     {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "CORS",
+        "importPath": "flask_cors",
+        "description": "flask_cors",
+        "isExtraImport": true,
+        "detail": "flask_cors",
+        "documentation": {}
+    },
+    {
         "label": "load_model",
         "importPath": "tensorflow.keras.models",
         "description": "tensorflow.keras.models",
@@ -123,11 +155,20 @@
         "documentation": {}
     },
     {
-        "label": "predict_image",
+        "label": "predict",
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def predict_image(image_path):\n    img = cv2.imread(image_path)\n    if img is None:\n        print(\"Image not found. Check the path.\")\n        return\n    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n    img = img / 255.0\n    img = np.expand_dims(img, axis=0)\n    prediction = model.predict(img)\n    if prediction[0][0] > 0.5:",
+        "peekOfCode": "def predict():\n    if \"file\" not in request.files:\n        return jsonify({\"error\": \"No file uploaded\"}), 400\n    file = request.files[\"file\"]\n    file_bytes = np.frombuffer(file.read(), np.uint8)\n    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)\n    if img is None:\n        return jsonify({\"error\": \"Invalid image\"}), 400\n    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n    img = img / 255.0",
+        "detail": "app",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "app",
+        "description": "app",
+        "peekOfCode": "app = Flask(__name__)\nCORS(app)\nmodel = load_model(\"malaria_model.h5\")\nIMG_SIZE = 64\n@app.route(\"/predict\", methods=[\"POST\"])\ndef predict():\n    if \"file\" not in request.files:\n        return jsonify({\"error\": \"No file uploaded\"}), 400\n    file = request.files[\"file\"]\n    file_bytes = np.frombuffer(file.read(), np.uint8)",
         "detail": "app",
         "documentation": {}
     },
@@ -136,7 +177,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "model = load_model(\"malaria_model.h5\")\nIMG_SIZE = 64\ndef predict_image(image_path):\n    img = cv2.imread(image_path)\n    if img is None:\n        print(\"Image not found. Check the path.\")\n        return\n    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n    img = img / 255.0\n    img = np.expand_dims(img, axis=0)",
+        "peekOfCode": "model = load_model(\"malaria_model.h5\")\nIMG_SIZE = 64\n@app.route(\"/predict\", methods=[\"POST\"])\ndef predict():\n    if \"file\" not in request.files:\n        return jsonify({\"error\": \"No file uploaded\"}), 400\n    file = request.files[\"file\"]\n    file_bytes = np.frombuffer(file.read(), np.uint8)\n    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)\n    if img is None:",
         "detail": "app",
         "documentation": {}
     },
@@ -145,7 +186,7 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "IMG_SIZE = 64\ndef predict_image(image_path):\n    img = cv2.imread(image_path)\n    if img is None:\n        print(\"Image not found. Check the path.\")\n        return\n    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n    img = img / 255.0\n    img = np.expand_dims(img, axis=0)\n    prediction = model.predict(img)",
+        "peekOfCode": "IMG_SIZE = 64\n@app.route(\"/predict\", methods=[\"POST\"])\ndef predict():\n    if \"file\" not in request.files:\n        return jsonify({\"error\": \"No file uploaded\"}), 400\n    file = request.files[\"file\"]\n    file_bytes = np.frombuffer(file.read(), np.uint8)\n    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)\n    if img is None:\n        return jsonify({\"error\": \"Invalid image\"}), 400",
         "detail": "app",
         "documentation": {}
     },
@@ -154,7 +195,7 @@
         "kind": 2,
         "importPath": "data_preprocessing",
         "description": "data_preprocessing",
-        "peekOfCode": "def load_data(dataset_path=\"cell_images/\"):\n    images, labels = [], []\n    for label in [\"Parasitized\", \"Uninfected\"]:\n        folder = os.path.join(dataset_path, label)\n        for file in os.listdir(folder):\n            img = cv2.imread(os.path.join(folder, file))\n            img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n            images.append(img)\n            labels.append(1 if label==\"Parasitized\" else 0)\n    X = np.array(images)/255.0",
+        "peekOfCode": "def load_data(dataset_path=\"cell_images/\"):\n    images, labels = [], []\n    for label in [\"Parasitized\", \"Uninfected\"]:\n        folder = os.path.join(dataset_path, label)\n        for file in os.listdir(folder):\n            file_path = os.path.join(folder, file)\n            img = cv2.imread(file_path)\n            if img is None:\n                print(\"Warning: Could not read\", file_path)\n                continue  # skip this file",
         "detail": "data_preprocessing",
         "documentation": {}
     },
@@ -163,7 +204,7 @@
         "kind": 5,
         "importPath": "data_preprocessing",
         "description": "data_preprocessing",
-        "peekOfCode": "IMG_SIZE = 64\ndef load_data(dataset_path=\"cell_images/\"):\n    images, labels = [], []\n    for label in [\"Parasitized\", \"Uninfected\"]:\n        folder = os.path.join(dataset_path, label)\n        for file in os.listdir(folder):\n            img = cv2.imread(os.path.join(folder, file))\n            img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n            images.append(img)\n            labels.append(1 if label==\"Parasitized\" else 0)",
+        "peekOfCode": "IMG_SIZE = 64\ndef load_data(dataset_path=\"cell_images/\"):\n    images, labels = [], []\n    for label in [\"Parasitized\", \"Uninfected\"]:\n        folder = os.path.join(dataset_path, label)\n        for file in os.listdir(folder):\n            file_path = os.path.join(folder, file)\n            img = cv2.imread(file_path)\n            if img is None:\n                print(\"Warning: Could not read\", file_path)",
         "detail": "data_preprocessing",
         "documentation": {}
     },
