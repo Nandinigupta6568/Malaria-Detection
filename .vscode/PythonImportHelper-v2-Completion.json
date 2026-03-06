@@ -1,58 +1,11 @@
 [
     {
-        "label": "Flask",
-        "importPath": "flask",
-        "description": "flask",
+        "label": "os",
+        "kind": 6,
         "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "request",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "jsonify",
-        "importPath": "flask",
-        "description": "flask",
-        "isExtraImport": true,
-        "detail": "flask",
-        "documentation": {}
-    },
-    {
-        "label": "CORS",
-        "importPath": "flask_cors",
-        "description": "flask_cors",
-        "isExtraImport": true,
-        "detail": "flask_cors",
-        "documentation": {}
-    },
-    {
-        "label": "load_model",
-        "importPath": "tensorflow.keras.models",
-        "description": "tensorflow.keras.models",
-        "isExtraImport": true,
-        "detail": "tensorflow.keras.models",
-        "documentation": {}
-    },
-    {
-        "label": "Sequential",
-        "importPath": "tensorflow.keras.models",
-        "description": "tensorflow.keras.models",
-        "isExtraImport": true,
-        "detail": "tensorflow.keras.models",
-        "documentation": {}
-    },
-    {
-        "label": "load_model",
-        "importPath": "tensorflow.keras.models",
-        "description": "tensorflow.keras.models",
-        "isExtraImport": true,
-        "detail": "tensorflow.keras.models",
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
         "documentation": {}
     },
     {
@@ -74,12 +27,27 @@
         "documentation": {}
     },
     {
-        "label": "os",
-        "kind": 6,
+        "label": "Sequential",
+        "importPath": "tensorflow.keras.models",
+        "description": "tensorflow.keras.models",
         "isExtraImport": true,
-        "importPath": "os",
-        "description": "os",
-        "detail": "os",
+        "detail": "tensorflow.keras.models",
+        "documentation": {}
+    },
+    {
+        "label": "load_model",
+        "importPath": "tensorflow.keras.models",
+        "description": "tensorflow.keras.models",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.models",
+        "documentation": {}
+    },
+    {
+        "label": "load_model",
+        "importPath": "tensorflow.keras.models",
+        "description": "tensorflow.keras.models",
+        "isExtraImport": true,
+        "detail": "tensorflow.keras.models",
         "documentation": {}
     },
     {
@@ -155,11 +123,88 @@
         "documentation": {}
     },
     {
+        "label": "Flask",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "request",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "jsonify",
+        "importPath": "flask",
+        "description": "flask",
+        "isExtraImport": true,
+        "detail": "flask",
+        "documentation": {}
+    },
+    {
+        "label": "CORS",
+        "importPath": "flask_cors",
+        "description": "flask_cors",
+        "isExtraImport": true,
+        "detail": "flask_cors",
+        "documentation": {}
+    },
+    {
+        "label": "load_data",
+        "kind": 2,
+        "importPath": "Training_model.data_preprocessing",
+        "description": "Training_model.data_preprocessing",
+        "peekOfCode": "def load_data(dataset_path=\"cell_images/\"):\n    images, labels = [], []\n    for label in [\"Parasitized\", \"Uninfected\"]:\n        folder = os.path.join(dataset_path, label)\n        for file in os.listdir(folder):\n            file_path = os.path.join(folder, file)\n            img = cv2.imread(file_path)\n            if img is None:\n                print(\"Warning: Could not read\", file_path)\n                continue  # skip this file",
+        "detail": "Training_model.data_preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "IMG_SIZE",
+        "kind": 5,
+        "importPath": "Training_model.data_preprocessing",
+        "description": "Training_model.data_preprocessing",
+        "peekOfCode": "IMG_SIZE = 64\ndef load_data(dataset_path=\"cell_images/\"):\n    images, labels = [], []\n    for label in [\"Parasitized\", \"Uninfected\"]:\n        folder = os.path.join(dataset_path, label)\n        for file in os.listdir(folder):\n            file_path = os.path.join(folder, file)\n            img = cv2.imread(file_path)\n            if img is None:\n                print(\"Warning: Could not read\", file_path)",
+        "detail": "Training_model.data_preprocessing",
+        "documentation": {}
+    },
+    {
+        "label": "create_model",
+        "kind": 2,
+        "importPath": "Training_model.model",
+        "description": "Training_model.model",
+        "peekOfCode": "def create_model(input_shape=(64,64,3)):\n    model = Sequential([\n        Conv2D(32, (3,3), activation='relu', input_shape=input_shape),\n        MaxPooling2D(2,2),\n        Conv2D(64, (3,3), activation='relu'),\n        MaxPooling2D(2,2),\n        Flatten(),\n        Dense(128, activation='relu'),\n        Dropout(0.5),\n        Dense(1, activation='sigmoid')",
+        "detail": "Training_model.model",
+        "documentation": {}
+    },
+    {
+        "label": "model",
+        "kind": 5,
+        "importPath": "Training_model.test_model",
+        "description": "Training_model.test_model",
+        "peekOfCode": "model = load_model(\"malaria_model.h5\")\nprint(\"Model loaded successfully!\")",
+        "detail": "Training_model.test_model",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "Training_model.train",
+        "description": "Training_model.train",
+        "peekOfCode": "def main():\n    print(\"🏁 main() started\")  # debug\n    # Load dataset\n    X, y = load_data()\n    print(\"Data loaded:\", X.shape, y.shape)\n    # Split dataset\n    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)\n    print(\"Data split done:\", X_train.shape, X_val.shape)\n    # Data augmentation\n    train_datagen = ImageDataGenerator(",
+        "detail": "Training_model.train",
+        "documentation": {}
+    },
+    {
         "label": "predict",
         "kind": 2,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "def predict():\n    if \"file\" not in request.files:\n        return jsonify({\"error\": \"No file uploaded\"}), 400\n    file = request.files[\"file\"]\n    file_bytes = np.frombuffer(file.read(), np.uint8)\n    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)\n    if img is None:\n        return jsonify({\"error\": \"Invalid image\"}), 400\n    img = cv2.resize(img, (IMG_SIZE, IMG_SIZE))\n    img = img / 255.0",
+        "peekOfCode": "def predict():\n    try:\n        # 1. Check if a file was sent in the request\n        if \"file\" not in request.files:\n            return jsonify({\"error\": \"No file part in the request\"}), 400\n        file = request.files[\"file\"]\n        if file.filename == '':\n            return jsonify({\"error\": \"No selected file\"}), 400\n        # 2. Convert the uploaded file to an OpenCV image\n        file_bytes = np.frombuffer(file.read(), np.uint8)",
         "detail": "app",
         "documentation": {}
     },
@@ -168,16 +213,16 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "app = Flask(__name__)\nCORS(app)\nmodel = load_model(\"malaria_model.h5\")\nIMG_SIZE = 64\n@app.route(\"/predict\", methods=[\"POST\"])\ndef predict():\n    if \"file\" not in request.files:\n        return jsonify({\"error\": \"No file uploaded\"}), 400\n    file = request.files[\"file\"]\n    file_bytes = np.frombuffer(file.read(), np.uint8)",
+        "peekOfCode": "app = Flask(__name__)\n# Enable CORS so your HTML file can communicate with this Python server\nCORS(app)\n# Configuration\nMODEL_PATH = \"malaria_model.h5\"\nIMG_SIZE = 64\n# Safety check: Ensure the model exists before starting the server\nif os.path.exists(MODEL_PATH):\n    try:\n        model = load_model(MODEL_PATH)",
         "detail": "app",
         "documentation": {}
     },
     {
-        "label": "model",
+        "label": "MODEL_PATH",
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "model = load_model(\"malaria_model.h5\")\nIMG_SIZE = 64\n@app.route(\"/predict\", methods=[\"POST\"])\ndef predict():\n    if \"file\" not in request.files:\n        return jsonify({\"error\": \"No file uploaded\"}), 400\n    file = request.files[\"file\"]\n    file_bytes = np.frombuffer(file.read(), np.uint8)\n    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)\n    if img is None:",
+        "peekOfCode": "MODEL_PATH = \"malaria_model.h5\"\nIMG_SIZE = 64\n# Safety check: Ensure the model exists before starting the server\nif os.path.exists(MODEL_PATH):\n    try:\n        model = load_model(MODEL_PATH)\n        print(\"Successfully loaded Malaria Detection Model.\")\n    except Exception as e:\n        print(f\"Error loading model file: {e}\")\nelse:",
         "detail": "app",
         "documentation": {}
     },
@@ -186,53 +231,8 @@
         "kind": 5,
         "importPath": "app",
         "description": "app",
-        "peekOfCode": "IMG_SIZE = 64\n@app.route(\"/predict\", methods=[\"POST\"])\ndef predict():\n    if \"file\" not in request.files:\n        return jsonify({\"error\": \"No file uploaded\"}), 400\n    file = request.files[\"file\"]\n    file_bytes = np.frombuffer(file.read(), np.uint8)\n    img = cv2.imdecode(file_bytes, cv2.IMREAD_COLOR)\n    if img is None:\n        return jsonify({\"error\": \"Invalid image\"}), 400",
+        "peekOfCode": "IMG_SIZE = 64\n# Safety check: Ensure the model exists before starting the server\nif os.path.exists(MODEL_PATH):\n    try:\n        model = load_model(MODEL_PATH)\n        print(\"Successfully loaded Malaria Detection Model.\")\n    except Exception as e:\n        print(f\"Error loading model file: {e}\")\nelse:\n    print(f\"CRITICAL ERROR: {MODEL_PATH} not found in the current directory.\")",
         "detail": "app",
-        "documentation": {}
-    },
-    {
-        "label": "load_data",
-        "kind": 2,
-        "importPath": "data_preprocessing",
-        "description": "data_preprocessing",
-        "peekOfCode": "def load_data(dataset_path=\"cell_images/\"):\n    images, labels = [], []\n    for label in [\"Parasitized\", \"Uninfected\"]:\n        folder = os.path.join(dataset_path, label)\n        for file in os.listdir(folder):\n            file_path = os.path.join(folder, file)\n            img = cv2.imread(file_path)\n            if img is None:\n                print(\"Warning: Could not read\", file_path)\n                continue  # skip this file",
-        "detail": "data_preprocessing",
-        "documentation": {}
-    },
-    {
-        "label": "IMG_SIZE",
-        "kind": 5,
-        "importPath": "data_preprocessing",
-        "description": "data_preprocessing",
-        "peekOfCode": "IMG_SIZE = 64\ndef load_data(dataset_path=\"cell_images/\"):\n    images, labels = [], []\n    for label in [\"Parasitized\", \"Uninfected\"]:\n        folder = os.path.join(dataset_path, label)\n        for file in os.listdir(folder):\n            file_path = os.path.join(folder, file)\n            img = cv2.imread(file_path)\n            if img is None:\n                print(\"Warning: Could not read\", file_path)",
-        "detail": "data_preprocessing",
-        "documentation": {}
-    },
-    {
-        "label": "create_model",
-        "kind": 2,
-        "importPath": "model",
-        "description": "model",
-        "peekOfCode": "def create_model(input_shape=(64,64,3)):\n    model = Sequential([\n        Conv2D(32, (3,3), activation='relu', input_shape=input_shape),\n        MaxPooling2D(2,2),\n        Conv2D(64, (3,3), activation='relu'),\n        MaxPooling2D(2,2),\n        Flatten(),\n        Dense(128, activation='relu'),\n        Dropout(0.5),\n        Dense(1, activation='sigmoid')",
-        "detail": "model",
-        "documentation": {}
-    },
-    {
-        "label": "model",
-        "kind": 5,
-        "importPath": "test_model",
-        "description": "test_model",
-        "peekOfCode": "model = load_model(\"malaria_model.h5\")\nprint(\"Model loaded successfully!\")",
-        "detail": "test_model",
-        "documentation": {}
-    },
-    {
-        "label": "main",
-        "kind": 2,
-        "importPath": "train",
-        "description": "train",
-        "peekOfCode": "def main():\n    print(\"🏁 main() started\")  # debug\n    # Load dataset\n    X, y = load_data()\n    print(\"Data loaded:\", X.shape, y.shape)\n    # Split dataset\n    X_train, X_val, y_train, y_val = train_test_split(X, y, test_size=0.2, random_state=42)\n    print(\"Data split done:\", X_train.shape, X_val.shape)\n    # Data augmentation\n    train_datagen = ImageDataGenerator(",
-        "detail": "train",
         "documentation": {}
     }
 ]
