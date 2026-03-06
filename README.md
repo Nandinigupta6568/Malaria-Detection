@@ -12,7 +12,7 @@ Malaria is caused by a tiny parasite called **Plasmodium**. This AI looks at a p
 
 ---
 
-## 🔬 The Science (Simplified)
+##  The Science (Simplified)
 The parasite has a "life cycle." It starts in the liver and then moves to your **red blood cells**. This is called the **Blood Stage**.
 * Our AI is trained to find the parasite in this specific stage.
 * This is when people get sick with **high fever and shaking chills**.
