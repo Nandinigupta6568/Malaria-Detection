@@ -1,0 +1,9 @@
+flask : Web framework to run website and handle the / predict route.
+
+flask-cors : This is essential for cross-origin resource sharing, allowing frontend to communicate with backend without security blocks.
+
+tensorflow : The library that loads malaria_model.h5 file, train malaria detection model and performs the actual deep learning analysis on the blood sample image.
+
+opencv-python : Used for resizing the uploaded images to 64x64. For reading and processing images.
+
+numpy : Used to convert the image data into numerical arrays that the AI can understand.
